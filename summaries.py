@@ -1,5 +1,8 @@
 from openai import OpenAI
-OPENAI_API_KEY = ""
+import os
+
+
+OPENAI_API_KEY = os.getenv("OPENAIKEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def format_message(role, content):
