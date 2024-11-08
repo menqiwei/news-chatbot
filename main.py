@@ -3,6 +3,11 @@ from os import listdir
 from os.path import isfile, join
 import os
 import summaries
+import Bert
+
+#Initialize the similarity metric
+SM = Bert.SimilarityMetric()
+
 
 #TODO: Make this recursively find all data 
 
@@ -68,7 +73,8 @@ for i,suma in enumerate(Bias):
         file.close()
 
 
-
+print("The similarity between the generated summary and the provided summary is: ")
+print(SM.getSimilarity(summaryList[0], AIsummaries[0]))
 
 
 
