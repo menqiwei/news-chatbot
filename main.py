@@ -4,6 +4,7 @@ from os.path import isfile, join
 import os
 import summaries
 
+#TODO: Make this recursively find all data 
 
 topic = "politics"
 
@@ -37,14 +38,35 @@ for filePath in onlySummaries:
 #Predicted Summaries List
 AIsummaries = []
 
-#Call ChatGPT to summarize
-AIsummaries.append(summaries.bias(contentList[0]))  #, len(summaryList[0].split(" "))))
+#Predicted Bias List
+Bias = []
 
+PredictedBiasThenSummaries = []
+
+#Call ChatGPT to summarize
+AIsummaries.append(summaries.summarize((contentList[0]), len(summaryList[0].split(" "))))
+
+Bias.append(summaries.bias(contentList[0]))
+
+PredictedBiasThenSummaries.append(summaries.summarizeANDBias(contentList[0], len(summaryList[0].split(" "))))
+
+#Write to files
 
 for i,suma in enumerate(AIsummaries):
+    with open("GeneratedSummaries" + os.sep + "Summaries" + os.sep  + topic + "{:0>3}.txt".format(i), 'w') as file:
+        file.write(suma)
+        file.close()
+
+for i,suma in enumerate(Bias):
     with open("GeneratedSummaries" + os.sep + "Detected Bias" + os.sep  + topic + "{:0>3}.txt".format(i), 'w') as file:
         file.write(suma)
         file.close()
+
+for i,suma in enumerate(Bias):
+    with open("GeneratedSummaries" + os.sep + "BiasThenSummary" + os.sep  + topic + "{:0>3}.txt".format(i), 'w') as file:
+        file.write(suma)
+        file.close()
+
 
 
 
