@@ -1,10 +1,13 @@
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+key = os.getenv("OPENAI_API_KEY")
 
 
-OPENAI_API_KEY = os.getenv("OPENAIKEY")
-client = OpenAI(api_key=OPENAI_API_KEY)
-
+client = OpenAI(api_key = key)
 def format_message(role, content):
     return {"role": role, "content": content}
 
@@ -33,7 +36,7 @@ def summarize(quotes, length):
 def bias(quotes):
 
     instructions = f"""
-    Here is a news article, summarize the article in as few sentences as possible while still maintaining information.
+    Here is a news article, try to classify the article based on media bias into one of 5 discrete classess: "far-left", "left", "center", "right", "far-right". Give an explanation for this classification.
 
     Quotes: {quotes}
     """
